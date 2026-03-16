@@ -45,24 +45,24 @@ extractRouter.post("/", async (req: Request, res: Response): Promise<void> => {
     });
     const page = await context.newPage();
 
-    // Listen to network traffic
-    page.on("request", (request: PlaywrightRequest) => {
-      const reqUrl = request.url();
-      if (reqUrl.includes(".m3u8") || reqUrl.includes(".mp4")) {
-        console.log(`Intercepted Media Stream: ${reqUrl}`);
-        extractedUrl = reqUrl;
-        extractedHeaders = request.headers();
+    // Listen to network traffic for responses to capture redirects (e.g. 302 to an .mp4)
+    page.on("response", (response) => {
+      const respUrl = response.url();
+      if (respUrl.includes(".m3u8") || respUrl.includes(".mp4")) {
+        console.log(`Intercepted Media Stream: ${respUrl}`);
+        extractedUrl = respUrl;
+        extractedHeaders = response.request().headers();
       }
     });
 
     // Navigate to page and wait for a bit to allow dynamic loading
     await page.goto(targetUrl, {
-      waitUntil: "domcontentloaded",
+      waitUntil: "networkidle",
       timeout: 30000,
     });
 
-    // Wait for potentially delayed requests
-    await page.waitForTimeout(5000);
+    // Wait for potentially delayed requests (extend slightly for slower networks)
+    await page.waitForTimeout(8000);
 
     await browser.close();
 
