@@ -40,7 +40,7 @@ export default function App() {
             <Video className="w-8 h-8 text-blue-400" />
           </div>
           <h1 className="text-3xl font-bold tracking-tight text-white">Universal Downloader</h1>
-          <p className="text-neutral-400 text-sm">Download high-quality videos from videqs.download</p>
+          <p className="text-neutral-400 text-sm">Download high-quality videos from videqs.download and playvvip.top</p>
         </div>
 
         <Card className="bg-neutral-900/50 border-neutral-800 backdrop-blur-xl">
@@ -54,7 +54,7 @@ export default function App() {
                 <Input 
                   id="video-url"
                   type="url" 
-                  placeholder="Paste videqs.download URL here..." 
+                  placeholder="Paste URL here (videqs or playvvip)..." 
                   value={url}
                   onChange={(e) => setUrl(e.target.value)}
                   className="bg-neutral-950/50 border-neutral-800 focus-visible:ring-blue-500 text-neutral-200 placeholder:text-neutral-600"
