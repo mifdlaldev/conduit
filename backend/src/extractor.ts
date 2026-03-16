@@ -48,10 +48,18 @@ extractRouter.post("/", async (req: Request, res: Response): Promise<void> => {
     // Listen to network traffic for responses to capture redirects (e.g. 302 to an .mp4)
     page.on("response", (response) => {
       const respUrl = response.url();
-      if (respUrl.includes(".m3u8") || respUrl.includes(".mp4")) {
-        console.log(`Intercepted Media Stream: ${respUrl}`);
-        extractedUrl = respUrl;
-        extractedHeaders = response.request().headers();
+      try {
+        const urlObj = new URL(respUrl);
+        if (
+          urlObj.pathname.endsWith(".m3u8") ||
+          urlObj.pathname.endsWith(".mp4")
+        ) {
+          console.log(`Intercepted Media Stream: ${respUrl}`);
+          extractedUrl = respUrl;
+          extractedHeaders = response.request().headers();
+        }
+      } catch (error) {
+        // Ignore parsing errors for invalid URLs
       }
     });
 

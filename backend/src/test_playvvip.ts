@@ -1,7 +1,7 @@
 import { chromium, Request as PlaywrightRequest } from 'playwright';
 
 async function testExtraction() {
-  const targetUrl = 'https://notsale.playvvip.top/BYuuQjRiH8?i=1';
+  const targetUrl = 'https://notsale.playvvip.top/detail/p0urVfAtUL';
   console.log(`Starting extraction test for: ${targetUrl}`);
 
   const browser = await chromium.launch({ headless: true });
@@ -11,13 +11,23 @@ async function testExtraction() {
   const page = await context.newPage();
 
   // Listen to network traffic
-  page.on('request', (request: PlaywrightRequest) => {
-    const reqUrl = request.url();
-    if (reqUrl.includes('.m3u8') || reqUrl.includes('.mp4')) {
-      console.log(`\n✅ Intercepted Media Stream: ${reqUrl}`);
-      console.log('Headers:', request.headers());
-    } else if (reqUrl.includes('video') || reqUrl.includes('stream') || reqUrl.includes('play')) {
-      console.log(`Potential video request: ${reqUrl}`);
+  page.on('response', (response) => {
+    const respUrl = response.url();
+    try {
+      const urlObj = new URL(respUrl);
+      if (
+        urlObj.pathname.endsWith('.m3u8') || 
+        urlObj.pathname.endsWith('.mp4')
+      ) {
+        console.log(`\n✅ Intercepted Media Stream: ${respUrl}`);
+        console.log('Headers:', response.request().headers());
+      } else if (respUrl.includes('playvidiframe') || respUrl.includes('m?id=')) {
+        console.log(`Potential iframe loaded: ${respUrl} [${response.status()}]`);
+      } else if (response.status() >= 400 && response.request().resourceType() === 'document') {
+        console.log(`Error document loaded: ${respUrl} [${response.status()}]`);
+      }
+    } catch (e) {
+      // invalid URL
     }
   });
 
