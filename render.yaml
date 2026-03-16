@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: link-download-backend
+    env: docker
+    dockerContext: backend
+    dockerfilePath: backend/Dockerfile
+    envVars:
+      - key: PORT
+        value: 3000
+    # Enable automatic deploys when pushing to this branch
+    autoDeploy: true
+    branch: main
