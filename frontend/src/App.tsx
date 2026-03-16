@@ -18,7 +18,8 @@ export default function App() {
     setResult(null)
     
     try {
-      const response = await axios.post('http://localhost:3000/api/v1/extract', { url })
+      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3000'
+      const response = await axios.post(`${apiUrl}/api/v1/extract`, { url })
       setResult({ downloadUrl: response.data.data.downloadUrl })
     } catch (err: any) {
       setResult({ 
