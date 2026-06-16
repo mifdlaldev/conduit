@@ -1,28 +1,40 @@
-import express, { Request, Response, NextFunction } from "express";
+import express, { type Request, type Response, type NextFunction } from "express";
 import helmet from "helmet";
 import cors from "cors";
 import rateLimit from "express-rate-limit";
-import { extractRouter } from "./extractor";
+import { env } from "./config";
+import { logger } from "./logger";
+import { extractRouter } from "./extractor/routes";
+import { ExtractError } from "./extractor/errors";
 
 const app = express();
-const PORT = process.env.PORT || 3001;
 
-// Respect ngrok/reverse proxy forwarded IP/protocol headers.
+// Trust proxy headers (ngrok, Render, reverse proxy)
 app.set("trust proxy", 1);
 
-// Security Middlewares (User Rules 44, 49)
-app.use(helmet()); // Sets security headers (HSTS, CSP, X-Frame-Options)
+// Security headers
+app.use(helmet());
+
+// CORS - supports comma-separated origins or wildcard
+const allowedOrigins =
+  env.ALLOWED_ORIGINS === "*"
+    ? "*"
+    : env.ALLOWED_ORIGINS.split(",").map((s) => s.trim());
+
 app.use(
   cors({
-    origin: "*", // For MVP, should be narrowed in prod per rule 49
+    origin: allowedOrigins,
     methods: ["GET", "POST"],
   }),
 );
 
-// Rate Limit (User Rules 19, 42)
+// Body parser
+app.use(express.json());
+
+// Rate limiter for all extract endpoints
 const limiter = rateLimit({
-  windowMs: 1 * 60 * 1000, // 1 minute
-  max: 5, // Limit each IP to 5 requests per `window` (here, per 1 minute)
+  windowMs: env.RATE_LIMIT_WINDOW_MS,
+  max: env.RATE_LIMIT_MAX,
   message: {
     meta: { status: 429, message: "Too many requests" },
     data: null,
@@ -30,22 +42,23 @@ const limiter = rateLimit({
   },
 });
 
-// Middleware
-app.use(express.json());
-
-// Routes (User Rule 16: Version Required)
+// Routes
 app.use("/api/v1/extract", limiter, extractRouter);
 
-// Global Error Handler
-app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
-  console.error(err.stack); // Log for internal
-  res.status(500).json({
-    meta: { status: 500, message: "Internal Server Error" },
+// Global error handler
+app.use((err: Error, req: Request, res: Response, _next: NextFunction) => {
+  logger.error({ err, requestId: req.headers["x-request-id"] }, "Unhandled error");
+
+  const statusCode = err instanceof ExtractError ? err.statusCode : 500;
+  const message = statusCode === 500 ? "Internal Server Error" : err.message;
+
+  res.status(statusCode).json({
+    meta: { status: statusCode, message },
     data: null,
-    error: "Something went wrong processing your request.",
+    error: message,
   });
 });
 
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+app.listen(env.PORT, () => {
+  logger.info({ port: env.PORT }, "Server started");
 });
