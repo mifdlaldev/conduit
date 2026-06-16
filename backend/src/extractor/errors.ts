@@ -3,8 +3,8 @@ export class ExtractError extends Error {
   public readonly code?: string;
   public readonly debug?: string[];
 
-  constructor(message: string, statusCode: number = 500, code?: string, debug?: string[]) {
-    super(message);
+  constructor(message: string, statusCode: number = 500, code?: string, debug?: string[], options?: ErrorOptions) {
+    super(message, options);
     this.name = "ExtractError";
     this.statusCode = statusCode;
     this.code = code;
@@ -15,7 +15,7 @@ export class ExtractError extends Error {
 export class BrowserMissingError extends ExtractError {
   constructor() {
     super(
-      'Playwright Chromium is not installed. Run "npm run playwright:install" in the backend folder, then restart the server.',
+      "Required browser dependency is not installed. See setup instructions.",
       503,
       "PLAYWRIGHT_BROWSER_MISSING",
     );
@@ -31,8 +31,8 @@ export class NoMediaFoundError extends ExtractError {
 }
 
 export class UpstreamFetchError extends ExtractError {
-  constructor(public readonly upstreamStatus: number) {
-    super("Upstream download request failed.", 502, "UPSTREAM_FAILED");
+  constructor(public readonly upstreamStatus: number, debug?: string[]) {
+    super("Upstream download request failed.", 502, "UPSTREAM_FAILED", debug);
     this.name = "UpstreamFetchError";
   }
 }
