@@ -1,7 +1,7 @@
 import { chromium, Request as PlaywrightRequest } from 'playwright';
 
 async function testExtraction() {
-  const targetUrl = 'https://notsale.playvvip.top/detail/p0urVfAtUL';
+  const targetUrl = 'https://notforsale.playvvip.top/d/3be1d14c8f';
   console.log(`Starting extraction test for: ${targetUrl}`);
 
   const browser = await chromium.launch({ headless: true });

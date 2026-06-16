@@ -5,10 +5,19 @@ import { Input } from '@/components/ui/input'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import axios from 'axios'
 
+type ExtractResponse = {
+  downloadUrl?: string
+  directDownloadUrl?: string | null
+  proxyDownloadUrl?: string
+  title?: string
+  provider?: string
+  deliveryMethod?: 'direct' | 'proxy'
+}
+
 export default function App() {
   const [url, setUrl] = useState('')
   const [loading, setLoading] = useState(false)
-  const [result, setResult] = useState<{ downloadUrl?: string; error?: string } | null>(null)
+  const [result, setResult] = useState<ExtractResponse & { error?: string } | null>(null)
 
   const handleDownload = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -18,17 +27,34 @@ export default function App() {
     setResult(null)
     
     try {
-      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3000'
-      const response = await axios.post(`${apiUrl}/api/v1/extract`, { url })
-      setResult({ downloadUrl: response.data.data.downloadUrl })
+      const response = await axios.post('/api/v1/extract', { url }, { timeout: 60000 })
+      setResult({
+        downloadUrl: response.data.data.downloadUrl,
+        directDownloadUrl: response.data.data.directDownloadUrl,
+        proxyDownloadUrl: response.data.data.proxyDownloadUrl,
+        title: response.data.data.title,
+        provider: response.data.data.provider,
+        deliveryMethod: response.data.data.deliveryMethod,
+      })
     } catch (err: any) {
+      const errorPayload = err.response?.data?.error
+      const message =
+        typeof errorPayload === 'string'
+          ? errorPayload
+          : errorPayload
+            ? JSON.stringify(errorPayload)
+            : err.message || 'An error occurred during extraction'
+
       setResult({ 
-        error: err.response?.data?.error || err.message || 'An error occurred during extraction' 
+        error: message,
       })
     } finally {
       setLoading(false)
     }
   }
+
+  const actionUrl = result?.directDownloadUrl || result?.proxyDownloadUrl
+  const isDirectResult = result?.deliveryMethod === 'direct'
 
   return (
     <div className="min-h-screen bg-neutral-950 flex flex-col items-center justify-center p-4 font-sans">
@@ -40,7 +66,7 @@ export default function App() {
             <Video className="w-8 h-8 text-blue-400" />
           </div>
           <h1 className="text-3xl font-bold tracking-tight text-white">Universal Downloader</h1>
-          <p className="text-neutral-400 text-sm">Download high-quality videos from videqs.download and playvvip.top</p>
+          <p className="text-neutral-400 text-sm">Extract direct video sources from videqs, playvvip, fwh, and videy</p>
         </div>
 
         <Card className="bg-neutral-900/50 border-neutral-800 backdrop-blur-xl">
@@ -54,7 +80,7 @@ export default function App() {
                 <Input 
                   id="video-url"
                   type="url" 
-                  placeholder="Paste URL here (videqs or playvvip)..." 
+                  placeholder="Paste URL here (videqs, playvvip, fwh, videy)..." 
                   value={url}
                   onChange={(e) => setUrl(e.target.value)}
                   className="bg-neutral-950/50 border-neutral-800 focus-visible:ring-blue-500 text-neutral-200 placeholder:text-neutral-600"
@@ -86,19 +112,30 @@ export default function App() {
               </div>
             )}
 
-            {result?.downloadUrl && (
+            {actionUrl && (
               <div className="mt-6 p-6 bg-blue-500/10 border border-blue-500/20 rounded-xl space-y-4 text-center">
                 <div className="text-blue-400 font-medium text-sm">Extraction Successful!</div>
+                {result.title && (
+                  <div className="text-xs text-neutral-300 break-words">{result.title}</div>
+                )}
+                {result.provider && (
+                  <div className="text-[11px] uppercase tracking-[0.2em] text-blue-200/80">
+                    Provider: {result.provider}
+                  </div>
+                )}
                 <a 
-                  href={result.downloadUrl}
-                  target="_blank"
-                  download
-                  rel="noreferrer"
+                  href={actionUrl}
+                  {...(isDirectResult ? { target: '_blank', rel: 'noreferrer' } : { download: true })}
                   className="inline-flex items-center justify-center h-10 px-6 font-medium bg-neutral-100 text-neutral-900 rounded-lg hover:bg-white transition-colors w-full"
                 >
                   <Download className="mr-2 h-4 w-4" />
-                  Download File
+                  {isDirectResult ? 'Open Direct Video' : 'Download File'}
                 </a>
+                {result.downloadUrl && (
+                  <div className="text-[11px] text-neutral-400 break-all">
+                    Stream source detected: {result.downloadUrl}
+                  </div>
+                )}
               </div>
             )}
           </CardContent>
