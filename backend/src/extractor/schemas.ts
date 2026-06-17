@@ -6,7 +6,12 @@ export const extractSchema = z.object({
     .string()
     .url()
     .refine((value) => {
-      const hostname = new URL(value).hostname.toLowerCase();
+      let hostname: string;
+      try {
+        hostname = new URL(value).hostname.toLowerCase();
+      } catch {
+        return false;
+      }
       return allowedHostSuffixes.some(
         (suffix) => hostname === suffix || hostname.endsWith(`.${suffix}`),
       );
