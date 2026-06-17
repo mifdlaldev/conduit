@@ -102,7 +102,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 ---
 
 <!-- Versions -->
-[Unreleased]: https://github.com/USERNAME/link-download/compare/v1.0.0-beta...HEAD
-[1.0.0-beta]: https://github.com/USERNAME/link-download/compare/v0.1.0...v1.0.0-beta
-[0.1.0]: https://github.com/USERNAME/link-download/compare/v0.0.1...v0.1.0
-[0.0.1]: https://github.com/USERNAME/link-download/releases/tag/v0.0.1
+[Unreleased]: https://github.com/USERNAME/conduit/compare/v1.0.0-beta...HEAD
+[1.0.0-beta]: https://github.com/USERNAME/conduit/compare/v0.1.0...v1.0.0-beta
+[0.1.0]: https://github.com/USERNAME/conduit/compare/v0.0.1...v0.1.0
+[0.0.1]: https://github.com/USERNAME/conduit/releases/tag/v0.0.1

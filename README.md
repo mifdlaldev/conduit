@@ -15,8 +15,8 @@
     <img src="https://img.shields.io/badge/tests-99_ passing-22c55e?logo=vitest" alt="Tests" />
     <img src="https://img.shields.io/badge/coverage-90%25_lines-22c55e" alt="Coverage" />
     <img src="https://img.shields.io/badge/license-MIT-blue" alt="License" />
-    <a href="https://github.com/codespaces/new?repo=mifdlaldev/link-download"><img src="https://img.shields.io/badge/Open_in-Codespaces-5B8EF0?logo=githubcodespaces" alt="Codespaces" /></a>
-    <a href="https://vercel.com/new/clone?repository-url=https://github.com/mifdlaldev/link-download"><img src="https://img.shields.io/badge/deploy_on-Vercel-000000?logo=vercel" alt="Vercel" /></a>
+    <a href="https://github.com/codespaces/new?repo=mifdlaldev/conduit"><img src="https://img.shields.io/badge/Open_in-Codespaces-5B8EF0?logo=githubcodespaces" alt="Codespaces" /></a>
+    <a href="https://vercel.com/new/clone?repository-url=https://github.com/mifdlaldev/conduit"><img src="https://img.shields.io/badge/deploy_on-Vercel-000000?logo=vercel" alt="Vercel" /></a>
   </p>
 </div>
 
@@ -24,7 +24,7 @@
 
 ## Live Demo
 
-**[Try the live demo!](https://link-download-bice.vercel.app)** — Free, no credit card, always online.
+**[Try the live demo!](https://conduit-liard.vercel.app)** — Free, no credit card, always online.
 
 | Provider | Live Demo | Full Backend |
 |---|---|---|
@@ -44,8 +44,8 @@
 
 | Method | Cost | Credit Card | Setup Time |
 |---|---|---|---|
-| **[GitHub Codespaces](https://github.com/codespaces/new?repo=mifdlaldev/link-download)** | Free (60h/month) | ❌ Not needed | 1 click |
-| **[Local / Docker](https://github.com/mifdlaldev/link-download#quick-start)** | Free (forever) | ❌ Not needed | ~2 minutes |
+| **[GitHub Codespaces](https://github.com/codespaces/new?repo=mifdlaldev/conduit)** | Free (60h/month) | ❌ Not needed | 1 click |
+| **[Local / Docker](https://github.com/mifdlaldev/conduit#quick-start)** | Free (forever) | ❌ Not needed | ~2 minutes |
 
 ---
 
@@ -147,15 +147,15 @@ backend/
 
 ### GitHub Codespaces (1 Click, Free)
 
-[![Open in Codespaces](https://img.shields.io/badge/Open_in-Codespaces-5B8EF0?logo=githubcodespaces)](https://github.com/codespaces/new?repo=mifdlaldev/link-download)
+[![Open in Codespaces](https://img.shields.io/badge/Open_in-Codespaces-5B8EF0?logo=githubcodespaces)](https://github.com/codespaces/new?repo=mifdlaldev/conduit)
 
 Click the badge above. Codespaces automatically installs dependencies and Playwright. No credit card needed. 60 hours/month free.
 
 ### Local Development
 
 ```bash
-git clone https://github.com/mifdlaldev/link-download.git
-cd link-download
+git clone https://github.com/mifdlaldev/conduit.git
+cd conduit
 
 # Backend
 cd backend

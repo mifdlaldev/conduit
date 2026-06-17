@@ -9,8 +9,8 @@ By participating, you agree to uphold our [Code of Conduct](CODE_OF_CONDUCT.md).
 ## Development Setup
 
 ```bash
-git clone https://github.com/mifdlaldev/link-download.git
-cd link-download
+git clone https://github.com/mifdlaldev/conduit.git
+cd conduit
 
 # Backend
 cd backend
@@ -102,4 +102,4 @@ If you find a security vulnerability, **do not** open a public issue. Follow our
 
 ## Questions?
 
-Open a [discussion](https://github.com/mifdlaldev/link-download/discussions) or check existing issues.
+Open a [discussion](https://github.com/mifdlaldev/conduit/discussions) or check existing issues.

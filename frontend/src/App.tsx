@@ -153,7 +153,7 @@ export default function App() {
                     </p>
                     <div className="flex flex-col gap-2 pt-1">
                       <a
-                        href="https://github.com/codespaces/new?repo=mifdlaldev/link-download"
+                        href="https://github.com/codespaces/new?repo=mifdlaldev/conduit"
                         target="_blank"
                         rel="noreferrer"
                         className="inline-flex items-center justify-center h-10 px-4 font-medium bg-neutral-200 text-neutral-900 rounded-lg hover:bg-white transition-colors text-sm gap-2"
@@ -204,7 +204,7 @@ export default function App() {
         {/* Footer */}
         <div className="text-center">
           <a
-            href="https://github.com/mifdlaldev/link-download"
+            href="https://github.com/mifdlaldev/conduit"
             target="_blank"
             rel="noreferrer"
             className="inline-flex items-center gap-2 text-neutral-500 hover:text-neutral-300 transition-colors text-xs"

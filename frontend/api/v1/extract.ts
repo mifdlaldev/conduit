@@ -119,7 +119,7 @@ export default function handler(req: VercelRequest, res: VercelResponse) {
     // --- Other providers: need Playwright backend ---
     const providerName = hostname.replace(/^.*\./, "");
     const setupGuideUrl =
-      "https://github.com/mifdlaldev/link-download#quick-start";
+      "https://github.com/mifdlaldev/conduit#quick-start";
 
     res.status(501).json({
       meta: { status: 501, message: "Not Implemented" },
@@ -130,7 +130,7 @@ export default function handler(req: VercelRequest, res: VercelResponse) {
         "Two free options (no credit card needed):",
         "",
         "1. GitHub Codespaces (free, 60h/month):",
-        "   https://github.com/codespaces/new?repo=mifdlaldev/link-download",
+        "   https://github.com/codespaces/new?repo=mifdlaldev/conduit",
         "",
         `2. Clone & run locally:`,
         `   ${setupGuideUrl}`,
