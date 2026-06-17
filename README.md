@@ -24,7 +24,7 @@
 
 ## Live Demo
 
-**[Try the live demo!](https://link-download.vercel.app)** — Free, no credit card, always online.
+**[Try the live demo!](https://link-download-bice.vercel.app)** — Free, no credit card, always online.
 
 | Provider | Live Demo | Full Backend |
 |---|---|---|
