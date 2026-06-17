@@ -13,3 +13,4 @@ frontend/.eslintcache
 # Backend specifics
 backend/node_modules/
 backend/dist/
+backend/coverage/

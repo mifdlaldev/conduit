@@ -145,7 +145,8 @@ export async function extractWithBrowser(
           }
         }
       } catch {
-        // Ignore parsing errors for malformed URLs returned by third-party pages.
+        // Malformed URLs from third-party pages are expected and benign.
+        // No logging needed — these are noise from ad networks, not actionable.
       }
     });
 

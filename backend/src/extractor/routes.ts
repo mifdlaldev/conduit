@@ -178,7 +178,8 @@ extractRouter.get("/download", async (req: Request, res: Response): Promise<void
       return;
     }
 
-    Readable.fromWeb(upstreamResponse.body as globalThis.ReadableStream<Uint8Array>).pipe(res);
+    const nodeStream = Readable.from(upstreamResponse.body);
+    nodeStream.pipe(res);
   } catch (error: unknown) {
     if (error instanceof ExtractError) {
       logger.error({ err: error, status: error.statusCode }, "Download Proxy Error");

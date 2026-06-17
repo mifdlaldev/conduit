@@ -15,7 +15,7 @@
   },
   "lint-staged": {
     "*.ts": [
-      "npx tsc --noEmit",
+      "bash -c 'npx tsc --noEmit --pretty'",
       "npx eslint"
     ]
   },

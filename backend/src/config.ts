@@ -6,7 +6,7 @@ const envSchema = z.object({
   ALLOWED_ORIGINS: z.string().default("*"),
   RATE_LIMIT_WINDOW_MS: z.coerce.number().default(60_000),
   RATE_LIMIT_MAX: z.coerce.number().default(5),
-  LOG_LEVEL: z.enum(["debug", "info", "warn", "error", "fatal", "trace"]).default("info"),
+  LOG_LEVEL: z.enum(["debug", "info", "warn", "error", "fatal", "trace", "silent"]).default("info"),
 });
 
 const parsed = envSchema.safeParse(process.env);
