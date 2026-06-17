@@ -1,0 +1,17 @@
+# Normalize line endings
+* text=auto eol=lf
+
+# TypeScript
+*.ts text
+*.tsx text
+*.css text
+*.html text
+*.json text
+*.md text diff=markdown
+*.yml text
+*.yaml text
+
+# Binary
+*.png binary
+*.svg text
+*.ico binary
