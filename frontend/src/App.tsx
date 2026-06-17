@@ -14,7 +14,7 @@ type ExtractResponse = {
   deliveryMethod?: 'direct' | 'proxy'
 }
 
-type ProviderStatus = 'direct' | 'full' | 'demo'
+type ProviderStatus = 'direct' | 'full'
 
 const PROVIDERS: { domain: string; name: string; status: ProviderStatus }[] = [
   { domain: 'videy.co', name: 'Videy', status: 'direct' },
