@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react'
-import { Download, Loader2, Video, ExternalLink, Github, ArrowRight, Zap, Shield, Globe } from 'lucide-react'
+import { Download, Loader2, Github, ArrowRight, Zap, Shield, Globe } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
